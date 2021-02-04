@@ -73,11 +73,20 @@ const RewardsComponent = () => {
         let filteredList = customerDetails.filter(item => item.name === rewardCustomerName);
         let points = 0;
         filteredList.forEach(item => {
-            if (item.amount > 100) {
-                points += (item.amount - 100) * 2 + (item.amount - (item.amount - 100) - 50);
+            console.log(item, new Date(item.date).getMonth(), new Date().getMonth())
+            let monthDiff = 12 - new Date(item.date).getMonth() + new Date().getMonth();
+            if (monthDiff > 12) {
+                monthDiff = monthDiff - 12;
             }
-            if (item.amount < 100 && item.amount > 50) {
-                points += (item.amount - 50);
+            if ((monthDiff <=3)) {
+                if (item.amount > 100) {
+                    console.log((item.amount - 100) * 2 + (item.amount - (item.amount - 100) - 50))
+                    points += (item.amount - 100) * 2 + (item.amount - (item.amount - 100) - 50);
+                }
+                if (item.amount < 100 && item.amount > 50) {
+                    points += (item.amount - 50);
+                }
+                
             }
         })
         setRewardPoints(points);
