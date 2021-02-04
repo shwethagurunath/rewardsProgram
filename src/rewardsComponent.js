@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         width: 200,
     },
+    alert: {
+        width: 300,
+        margin: 'auto',
+        padding: 10
+    }
 }));
 
 function Alert(props) {
@@ -101,9 +106,14 @@ const RewardsComponent = () => {
                 </div>
                 <Button variant="contained" color="primary" onClick={getRewards}>Calculate Rewards</Button>
                 {
-                    rewardPoints ? <div className={classes.rewards}>
-                        <span>Rewards:{rewardPoints}</span>
-                    </div> : null
+                    typeof rewardPoints === 'number' ?
+                        (
+                            rewardPoints > 0 ?
+                            <div className={classes.alert}><Alert severity="success">Rewards for {rewardCustomerName}: {rewardPoints}</Alert></div>:
+                            // <div className={classes.rewards}><span>Rewards:{rewardPoints}</span></div> : 
+                            <div className={classes.alert}><Alert severity="warning">No Rewards for {rewardCustomerName}</Alert></div>
+                        ):
+                    null
                 }
 
             </div>
@@ -132,7 +142,7 @@ const RewardsComponent = () => {
                     </div>
                     <div className={classes.rewards}><Button variant="contained" color="primary" onClick={handleSubmit}>Add New Purchase</Button></div>
                     {
-                        showMessage ? <Alert severity="success">New Purchase Added</Alert> : null
+                        showMessage ?  <div className={classes.alert}><Alert severity="success">New Purchase Added</Alert></div>: null
                     }
                 </form>
 
